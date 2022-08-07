@@ -5,8 +5,6 @@ const cors = require("cors");
 const config = require("./config/appsettings.js");
 const users = require("./routes/users.js");
 
-const port = 3000;
-
 //create express app
 const app = express();
 
@@ -31,6 +29,6 @@ app.use(bodyParser.json());
 
 app.use('/users', users);
 
-app.listen(port, () => {
-    console.log("Server started at port 3000.");
+app.listen(config.appPort, () => {
+    console.log("Server started at port " + config.appPort + ".");
 });
