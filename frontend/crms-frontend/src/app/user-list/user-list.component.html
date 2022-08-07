@@ -1,0 +1,100 @@
+<h3 class="m-5">User List</h3>
+<form class="m-5" #userFilterForm="ngForm">
+    <div class="row mb-4">
+        <div class="col-sm-3 form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="Filter from ID" 
+            [(ngModel)]="filterSortData.filterInfo.id" #id="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3 form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Filter from Name"
+            [(ngModel)]="filterSortData.filterInfo.name" #name="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3 form-group">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Filter from Email"
+            [(ngModel)]="filterSortData.filterInfo.email" #email="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-sm-3 form-group">
+            <label for="contactNumber">Contact Number:</label>
+            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" placeholder="Filter from Contact Number"
+            [(ngModel)]="filterSortData.filterInfo.tel" #tel="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3 form-group">
+            <label for="address">Address:</label>
+            <input type="email" class="form-control" id="address" name="address" placeholder="Filter from Address"
+            [(ngModel)]="filterSortData.filterInfo.address" #address="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3 form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" name="status" id="status" name="status" [(ngModel)]="filterSortData.filterInfo.status" #status="ngModel">
+                <option value="null" disabled>Please select a status</option>
+                <option value="active">Active</option>
+                <option value="nonactive">Non-Active</option>
+                <option value="lead">Lead</option>
+            </select>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-sm-3">
+            <label for="createdDate">Created Date:</label>
+            <input type="date" class="form-control" id="createdDate" name="createdDate"
+            [(ngModel)]="filterSortData.filterInfo.createdDateTime" #createdDateTime="ngModel">
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 text-center">
+            <button type="submit" class="btn btn-primary" 
+            [disabled]="!userFilterForm.dirty || (filterSortData.filterInfo.id == '' && 
+                        filterSortData.filterInfo.name == '' && filterSortData.filterInfo.email == '' && 
+                        filterSortData.filterInfo.tel == '' && filterSortData.filterInfo.address == '')"
+            (click)="getUsers();">
+                Filter
+            </button>
+        </div>
+    </div>
+</form>
+<div class="m-5">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Created Date Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let user of users;">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.tel}}</td>
+            <td>{{user.address}}</td>
+            <td>{{user.status == 'active' ? "Active" : user.status == 'nonactive' ? "Non-Active" : "Lead"}}</td>
+            <td>{{user.createdDateTime}}</td>
+            <td>
+                <button class="btn btn-primary me-4" title="View User Details" routerLink="/user-detail/{{user.id}}">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-primary" (click)="openModal(user.id, user.status);">
+                    Change Status
+                </button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>

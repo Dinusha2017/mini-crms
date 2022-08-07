@@ -1,0 +1,28 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Change User Status</h4>
+    <button type="button" class="close" (click)="closeModal();">&times;</button>
+  </div>
+  <div class="modal-body">
+    <form #editStatusForm>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="status">Status:</label>
+          <select class="form-control" name="status" id="status" [(ngModel)]="currentStatus" #status="ngModel">
+              <option value="null" disabled>Please select a status</option>
+              <option value="active">Active</option>
+              <option value="nonactive">Non-Active</option>
+              <option value="lead">Lead</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <button type="button" class="col-sm-3 btn" (click)="closeModal();">Close</button>
+        <div class="col-sm-5"></div>
+        <button type="button" class="col-sm-3 btn btn-warning" [disabled]="!status.touched" 
+        (click)="updateUserStatus();">Update</button>
+        <div class="col-sm-1"></div>
+      </div>
+    </form>
+  </div>
+</div>
