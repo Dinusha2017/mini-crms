@@ -1,0 +1,14 @@
+Below URL can be used from Postman to get the initial users added to Mongo DB once backend is running.
+http://localhost:3000/users/add
+
+Content-Type: application/json
+
+Sample Payload:
+{
+    "id": "004",
+    "name": "Alice",
+    "email": "alice@gmail.com",
+    "tel": "0775344434",
+    "address": "Gampaha",
+    "status": "lead"
+}

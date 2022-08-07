@@ -24,5 +24,6 @@ After cloning project, steps to start Angular frontend:
 2. You can run "ng serve --open" to run the application. If you want to change the port at which the application runs, give command: "ng serve --port 4401 --open", putting the port number at the place 4401 is written.
 
 Other notes:
+- Initial users can be added to the application by using the details mentioned in initial_users text file.
 - User list table can be sorted only by one column at a time. Table can be sorted by a particular column by clicking on the table header of that respective column.
 - User data can be filtered using id, name, email, contact number, address, and status fields.
