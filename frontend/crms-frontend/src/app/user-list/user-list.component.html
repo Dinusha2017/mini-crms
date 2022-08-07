@@ -45,13 +45,13 @@
         <div class="col-sm-1"></div>
     </div>
     <div class="row mb-4">
-        <div class="col-sm-3">
-            <label for="createdDate">Created Date:</label>
-            <input type="date" class="form-control" id="createdDate" name="createdDate"
-            [(ngModel)]="filterSortData.filterInfo.createdDateTime" #createdDateTime="ngModel">
-        </div>
+        <div class="col-sm-3"></div>
         <div class="col-sm-1"></div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4 text-center">
+            <button type="submit" class="btn btn-primary" (click)="clearFilterSortData();">
+                Reset
+            </button>
+        </div>
         <div class="col-sm-4 text-center">
             <button type="submit" class="btn btn-primary" 
             [disabled]="!userFilterForm.dirty || (filterSortData.filterInfo.id == '' && 
@@ -67,14 +67,44 @@
     <table class="table table-hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact Number</th>
-            <th>Address</th>
-            <th>Status</th>
-            <th>Created Date Time</th>
-            <th>Actions</th>
+            <th (click)="handleSorting('id');" 
+            (mouseenter)="handleTableHeaderHover('id', 'mouseenter');" (mouseleave)="handleTableHeaderHover('id', 'mouseleave');" 
+            title="Click to sort by ID">ID 
+                <i *ngIf="currentSortCol == 'id' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'id' && currentSortCol != 'id') || (currentSortCol == 'id' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('name');" 
+            (mouseenter)="handleTableHeaderHover('name', 'mouseenter');" (mouseleave)="handleTableHeaderHover('name', 'mouseleave');" 
+            title="Click to sort by Name">Name 
+                <i *ngIf="currentSortCol == 'name' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'name' && currentSortCol != 'name') || (currentSortCol == 'name' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('email');" 
+            (mouseenter)="handleTableHeaderHover('email', 'mouseenter');" (mouseleave)="handleTableHeaderHover('email', 'mouseleave');" 
+            title="Click to sort by Email">Email 
+                <i *ngIf="currentSortCol == 'email' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'email' && currentSortCol != 'email') || (currentSortCol == 'email' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('tel');" 
+            (mouseenter)="handleTableHeaderHover('tel', 'mouseenter');" (mouseleave)="handleTableHeaderHover('tel', 'mouseleave');" 
+            title="Click to sort by Contact Number">Contact Number 
+                <i *ngIf="currentSortCol == 'tel' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'tel' && currentSortCol != 'tel') || (currentSortCol == 'tel' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('address');" 
+            (mouseenter)="handleTableHeaderHover('address', 'mouseenter');" (mouseleave)="handleTableHeaderHover('address', 'mouseleave');" 
+            title="Click to sort by Address">Address 
+                <i *ngIf="currentSortCol == 'address' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'address' && currentSortCol != 'address') || (currentSortCol == 'address' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('status');" 
+            (mouseenter)="handleTableHeaderHover('status', 'mouseenter');" (mouseleave)="handleTableHeaderHover('status', 'mouseleave');" 
+            title="Click to sort by Status">Status 
+                <i *ngIf="currentSortCol == 'status' && currentSortOrder == -1" class="fa-solid fa-angle-up"></i>
+                <i *ngIf="(currentHoverElement == 'status' && currentSortCol != 'status') || (currentSortCol == 'status' && currentSortOrder == 1)" class="fa-solid fa-angle-down"></i>
+            </th>
+            <th (click)="handleSorting('createdDateTime');" title="Click to reset sorted table">Created Date Time</th>
+            <th (click)="handleSorting('actions');" title="Click to reset sorted table">Actions</th>
           </tr>
         </thead>
         <tbody>

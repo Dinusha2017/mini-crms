@@ -27,33 +27,9 @@ export class UserListComponent implements OnInit {
     },
     sortCol: {}
   };
-  // [{
-  //   id: "1",
-  //   name: "Anne",
-  //   email: "anne@gmail.com",
-  //   tel: "0772494333",
-  //   address: "Colombo",
-  //   status: "active",
-  //   createdDateTime: "2022-05-03 02:34:34"
-  // },
-  // {
-  //   id: "2",
-  //   name: "John",
-  //   email: "john@gmail.com",
-  //   tel: "0772434333",
-  //   address: "Gampaha",
-  //   status: "lead",
-  //   createdDateTime: "2022-08-03 02:34:34"
-  // },
-  // {
-  //   id: "3",
-  //   name: "Paul",
-  //   email: "paul@gmail.com",
-  //   tel: "0772467333",
-  //   address: "Colombo",
-  //   status: "nonactive",
-  //   createdDateTime: "2022-03-03 02:34:34"
-  // }];
+  currentSortCol: string = "";
+  currentSortOrder: number = 0;
+  currentHoverElement: string = "";
 
   constructor(private modalService: NgbModal, 
               private toastr: ToastrService, 
@@ -83,12 +59,60 @@ export class UserListComponent implements OnInit {
     modalRef.componentInstance.currentStatus = status;
     modalRef.result.then((result) => {
       if (result == 'success') {
-        this.resetFilterSortData();
-        this.getUsers();
+        this.clearFilterSortData();
       }
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  /** Handles sorting of data in user list. */
+  handleSorting(column: string) {
+    if (column == "createdDateTime" || column == "actions") {
+      this.clearFilterSortData();
+      return;
+    }
+
+    // 1 represents ascending and -1 represents descending
+    if (this.currentSortCol == column && this.currentSortOrder == 1) {
+      this.currentSortOrder = -1;
+    } else if (this.currentSortCol == column && this.currentSortOrder == -1) {
+      this.currentSortOrder = 1;
+    } else {
+      this.currentSortOrder = 1;
+    }
+
+    // sets initial column and when sorted by a new column
+    if (this.currentSortCol == "" || this.currentSortCol != column) {
+      this.currentSortCol = column;
+    }
+
+    this.setSortData();
+
+    this.getUsers();
+  }
+
+  /** Sets sort data to object. */
+  setSortData() {
+    this.filterSortData.sortCol = {};
+    this.filterSortData.sortCol[this.currentSortCol] = this.currentSortOrder;
+  }
+
+  /** Handles table header hovering to display arrows appropriately. */
+  handleTableHeaderHover(column: string, event: string) {
+    if (event == "mouseenter") {
+      this.currentHoverElement = column;
+    } else {
+      this.currentHoverElement = "";
+    }
+  }
+
+  /** Clear filter and sort data,
+   * Reset data in table
+   */
+  clearFilterSortData() {
+    this.resetFilterSortData();
+    this.getUsers();
   }
 
   /** Resets user data filtering and sorting conditions. */
